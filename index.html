@@ -1,35 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Supabase</title>
+
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+max-width:800px;
+margin:40px auto;
+padding:20px;
+}
+
+input{
+padding:10px;
+width:300px;
+}
+
+button{
+padding:10px 20px;
+margin-left:10px;
+}
+
+pre{
+background:#111;
+color:#0f0;
+padding:20px;
+margin-top:20px;
+white-space:pre-wrap;
+}
+</style>
 </head>
 <body>
 
-<input id="email" placeholder="email">
-<button onclick="participer()">Test Supabase</button>
+<h1>Test connexion Supabase</h1>
 
-<div id="result"></div>
+<input
+id="email"
+type="email"
+placeholder="test@mail.com">
+
+<button onclick="participer()">
+Tester
+</button>
+
+<pre id="log">Prêt...</pre>
 
 <script>
 
+const log = (msg)=>{
+document.getElementById("log").textContent += "\n" + msg;
+}
+
+log("Chargement Supabase...");
+
 const client = supabase.createClient(
-'https://cfaeujwhttqeasxrudxv.supabase.co',
-'sb_publishable_JlVXcA65QfH-MpPpruDluw_vWtcerW2'
+"https://cfaeujwhttqeasxrudxv.supabase.co",
+"sb_publishable_JlVXcA65QfH-MpPpruDluw_vWtcerW2"
 );
+
+log("Client créé.");
 
 async function participer(){
 
-const email = document.getElementById('email').value;
+document.getElementById("log").textContent = "";
 
-const { data, error } = await client
-.from('participants')
-.insert([{ email }])
+const email =
+document.getElementById("email").value.trim();
+
+log("Email : " + email);
+
+try{
+
+log("Test SELECT...");
+
+const selectResult =
+await client
+.from("participants")
+.select("*")
+.limit(1);
+
+log(JSON.stringify(selectResult,null,2));
+
+log("Test INSERT...");
+
+const insertResult =
+await client
+.from("participants")
+.insert([
+{
+email: email
+}
+])
 .select();
 
-document.getElementById('result').innerText =
-JSON.stringify({data,error},null,2);
+log(JSON.stringify(insertResult,null,2));
 
-console.log(data,error);
+}catch(e){
+
+log("EXCEPTION");
+log(e.message);
+
+}
 
 }
 
