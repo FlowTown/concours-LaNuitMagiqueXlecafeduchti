@@ -3,108 +3,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Test Supabase</title>
+
+<title>Jeu Concours</title>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
 <style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
 body{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(
+135deg,
+#050505,
+#111111,
+#050505
+);
 font-family:Arial,sans-serif;
-max-width:800px;
-margin:40px auto;
+color:white;
 padding:20px;
 }
 
-input{
-padding:10px;
-width:300px;
+.card{
+width:100%;
+max-width:650px;
+background:#161616;
+border:1px solid rgba(212,175,55,.25);
+border-radius:25px;
+padding:40px;
+text-align:center;
+box-shadow:0 0 40px rgba(0,0,0,.5);
+}
+
+.logos{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:30px;
+margin-bottom:30px;
+flex-wrap:wrap;
+}
+
+.logos img{
+max-height:90px;
+max-width:220px;
+object-fit:contain;
+}
+
+h1{
+color:#d4af37;
+margin-bottom:15px;
+}
+
+.subtitle{
+opacity:.9;
+margin-bottom:30px;
+line-height:1.5;
+}
+
+input[type=email]{
+width:100%;
+padding:16px;
+border:none;
+border-radius:12px;
+margin-bottom:20px;
+font-size:16px;
+}
+
+.checkbox{
+text-align:left;
+margin-bottom:25px;
+font-size:14px;
+line-height:1.4;
+}
+
+.checkbox input{
+margin-right:10px;
 }
 
 button{
-padding:10px 20px;
-margin-left:10px;
+width:100%;
+padding:16px;
+border:none;
+border-radius:12px;
+background:#d4af37;
+color:black;
+font-weight:bold;
+font-size:16px;
+cursor:pointer;
 }
 
-pre{
-background:#111;
-color:#0f0;
-padding:20px;
-margin-top:20px;
-white-space:pre-wrap;
+button:hover{
+opacity:.95;
 }
+
+#message{
+margin-top:25px;
+font-weight:bold;
+font-size:16px;
+}
+
+.reglement{
+margin-top:25px;
+font-size:12px;
+opacity:.7;
+}
+
 </style>
 </head>
 <body>
 
-<h1>Test connexion Supabase</h1>
+<div class="card">
+
+<div class="logos">
+<img src="Main%20Logo%20Holder%20(0-00-12-12)%20GOLD.png">
+<img src="Logo%20cafeduchti.png">
+</div>
+
+<h1>🎩 Jeu Concours</h1>
+
+<p class="subtitle">
+Tentez votre chance pour gagner vos places
+pour La Nuit Magique.
+</p>
 
 <input
-id="email"
 type="email"
-placeholder="test@mail.com">
+id="email"
+placeholder="Votre adresse email">
+
+<div class="checkbox">
+<label>
+<input type="checkbox" id="rgpd">
+J'accepte le règlement du concours et l'utilisation de mon adresse email dans le cadre de celui-ci.
+</label>
+</div>
 
 <button onclick="participer()">
-Tester
+Participer
 </button>
 
-<pre id="log">Prêt...</pre>
+<div id="message"></div>
+
+<div class="reglement">
+Une seule participation par adresse email.
+</div>
+
+</div>
 
 <script>
-
-const log = (msg)=>{
-document.getElementById("log").textContent += "\n" + msg;
-}
-
-log("Chargement Supabase...");
 
 const client = supabase.createClient(
 "https://cfaeujwhttqeasxrudxv.supabase.co",
 "sb_publishable_JlVXcA65QfH-MpPpruDluw_vWtcerW2"
 );
 
-log("Client créé.");
-
 async function participer(){
-
-document.getElementById("log").textContent = "";
 
 const email =
 document.getElementById("email").value.trim();
 
-log("Email : " + email);
+const rgpd =
+document.getElementById("rgpd").checked;
 
-try{
+const message =
+document.getElementById("message");
 
-log("Test SELECT...");
+message.innerHTML = "";
 
-const selectResult =
-await client
-.from("participants")
-.select("*")
-.limit(1);
-
-log(JSON.stringify(selectResult,null,2));
-
-log("Test INSERT...");
-
-const insertResult =
-await client
-.from("participants")
-.insert([
-{
-email: email
+if(!email){
+message.innerHTML =
+"❌ Veuillez renseigner votre adresse email.";
+return;
 }
-])
+
+if(!rgpd){
+message.innerHTML =
+"❌ Veuillez accepter le règlement.";
+return;
+}
+
+const result =
+await client
+.from("participants")
+.insert([{email}])
 .select();
 
-log(JSON.stringify(insertResult,null,2));
+if(result.error){
 
-}catch(e){
-
-log("EXCEPTION");
-log(e.message);
-
+if(
+result.error.message
+.toLowerCase()
+.includes("duplicate")
+||
+result.error.code === "23505"
+){
+message.innerHTML =
+"⚠️ Cette adresse email a déjà participé.";
 }
+else{
+message.innerHTML =
+"❌ Erreur : " + result.error.message;
+}
+
+return;
+}
+
+message.innerHTML =
+"✅ Participation enregistrée. Bonne chance !";
+
+document.getElementById("email").value = "";
 
 }
 
