@@ -3,117 +3,173 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Nuit Magique x Café du Ch'ti</title>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<title>La Nuit Magique - V4 Preview</title>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+
 body{
 font-family:Arial,sans-serif;
-background:radial-gradient(circle at top,#6d5312 0%,#050505 35%);
-color:#fff;min-height:100vh;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:30px;
+background:
+linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.75)),
+url("BG CONCOURS NM.png");
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+color:white;
 }
-.container{max-width:900px;margin:auto;padding:30px}
+
 .card{
-background:rgba(20,20,20,.92);
-border:1px solid rgba(212,175,55,.25);
-border-radius:30px;padding:40px;text-align:center;
-margin-top:20px;
+width:100%;
+max-width:760px;
+background:rgba(15,15,15,.35);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.12);
+border-radius:32px;
+padding:40px;
+text-align:center;
+box-shadow:0 0 50px rgba(0,0,0,.45);
 }
-.logo-lnm{max-width:420px;width:100%;display:block;margin:0 auto 10px}
-.logo-cafe{max-width:180px;width:100%;display:block;margin:0 auto 25px}
-h1{color:#d4af37;margin-bottom:15px}
-.intro{line-height:1.7;margin-bottom:25px}
-.lots{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:25px 0}
-.lot{padding:18px;border-radius:14px;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.2)}
-input[type=email]{width:100%;padding:16px;border-radius:12px;border:none;margin:15px 0}
-.check{display:flex;gap:10px;text-align:left;margin:12px 0}
-button{width:100%;padding:16px;border:none;border-radius:12px;background:#d4af37;font-weight:bold;cursor:pointer}
-#message{margin-top:15px;font-weight:bold}
-.success{display:none;text-align:center;padding:50px}
-.success h2{color:#d4af37;margin-bottom:20px}
-@media(max-width:700px){.lots{grid-template-columns:1fr}.logo-lnm{max-width:280px}}
+
+.logo-lnm{
+width:100%;
+max-width:500px;
+display:block;
+margin:auto;
+filter:drop-shadow(0 0 25px rgba(255,220,120,.5));
+}
+
+.logo-cafe{
+width:130px;
+margin:20px auto;
+display:block;
+background:white;
+border-radius:50%;
+padding:8px;
+}
+
+h1{
+font-size:3rem;
+color:#ffd96a;
+text-shadow:0 0 20px rgba(255,220,120,.4);
+margin-bottom:15px;
+}
+
+.intro{
+line-height:1.8;
+margin-bottom:25px;
+}
+
+.lots-count{
+font-size:2rem;
+font-weight:bold;
+color:#ffd96a;
+margin:25px 0;
+}
+
+.lots{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+margin-bottom:25px;
+}
+
+.lot{
+padding:18px;
+border-radius:18px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.12);
+}
+
+input{
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+margin-bottom:15px;
+}
+
+.check{
+display:flex;
+gap:10px;
+text-align:left;
+margin-bottom:12px;
+}
+
+button{
+width:100%;
+background:linear-gradient(45deg,#ffd96a,#d4af37);
+color:black;
+font-size:18px;
+font-weight:bold;
+border:none;
+padding:18px;
+border-radius:15px;
+cursor:pointer;
+}
+
+.preview{
+margin-top:25px;
+padding:20px;
+border-radius:20px;
+background:rgba(255,215,106,.12);
+border:1px solid rgba(255,215,106,.25);
+}
+
+@media(max-width:700px){
+h1{font-size:2rem}
+.lots{grid-template-columns:1fr}
+.logo-lnm{max-width:280px}
+}
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="card">
 
-<div id="formCard" class="card">
-<img src="Main%20Logo%20Holder%20(0-00-12-12)%20GOLD.png" class="logo-lnm">
-<img src="Logo%20cafeduchti.png" class="logo-cafe">
+<img src="Main Logo Holder (0-00-12-12) GOLD.png" class="logo-lnm">
+<img src="Logo cafeduchti.png" class="logo-cafe">
 
 <h1>🎩 Grand Jeu Concours</h1>
 
 <p class="intro">
-Tente ta chance de remporter un PASS, une place ou une petite surprise pour La Nuit Magique !<br><br>
-📍 Port de Plaisance Béthune - Annezin<br>
+Tente ta chance de remporter un PASS, une place ou une petite surprise pour La Nuit Magique !
+<br><br>
+📍 Port de Plaisance Béthune - Annezin
+<br>
 📅 Du 14 au 16 août 2026
 </p>
+
+<div class="lots-count">🎁 470 LOTS À GAGNER</div>
 
 <div class="lots">
 <div class="lot">🎫 20 PASS 3 jours</div>
 <div class="lot">🎟️ 50 Places 1 jour</div>
-<div class="lot">🏷️ 100 Codes -20%</div>
-<div class="lot">💛 300 Codes -10%</div>
+<div class="lot">🏷️ 100 Codes promo -20%</div>
+<div class="lot">💛 300 Codes promo -10%</div>
 </div>
 
-<input type="email" id="email" placeholder="Votre adresse email">
+<input placeholder="Votre adresse email">
 
-<label class="check"><input type="checkbox" id="newsletter"> Recevoir les actualités de La Nuit Magique</label>
-<label class="check"><input type="checkbox" id="rgpd"> J'accepte le règlement et l'utilisation de mon email</label>
+<label class="check"><input type="checkbox"> Recevoir les actualités de La Nuit Magique</label>
+<label class="check"><input type="checkbox"> J'accepte le règlement du concours</label>
 
-<button onclick="participer()">Participer</button>
+<button>Participer</button>
 
-<div id="message"></div>
-</div>
-
-<div id="success" class="card success">
-<h2>✅ Participation enregistrée !</h2>
-<p>Merci d'avoir participé.</p>
-<br>
-<p>📅 Tirage au sort le 1er août 2026</p>
-<br>
-<p>Les gagnants seront contactés par email.</p>
+<div class="preview">
+✨ PARTICIPATION ENREGISTRÉE ✨
+<br><br>
+📅 Tirage au sort le 1er août 2026
+<br><br>
+🎩 Peut-être serez-vous l'un des gagnants...
 </div>
 
 </div>
-
-<script>
-const client = supabase.createClient(
-"https://cfaeujwhttqeasxrudxv.supabase.co",
-"sb_publishable_JlVXcA65QfH-MpPpruDluw_vWtcerW2"
-);
-
-async function participer(){
-
-const email=document.getElementById("email").value.trim();
-const newsletter=document.getElementById("newsletter").checked;
-const rgpd=document.getElementById("rgpd").checked;
-const message=document.getElementById("message");
-
-message.innerHTML="";
-
-if(!email){message.innerHTML="❌ Veuillez renseigner votre email.";return;}
-if(!rgpd){message.innerHTML="❌ Veuillez accepter le règlement.";return;}
-
-const result=await client.from("participants").insert([{
-email:email,
-newsletter:newsletter
-}]).select();
-
-if(result.error){
-if(result.error.code==="23505"){
-message.innerHTML="⚠️ Cette adresse email a déjà participé.";
-}else{
-message.innerHTML="❌ "+result.error.message;
-}
-return;
-}
-
-document.getElementById("formCard").style.display="none";
-document.getElementById("success").style.display="block";
-}
-</script>
 
 </body>
 </html>
