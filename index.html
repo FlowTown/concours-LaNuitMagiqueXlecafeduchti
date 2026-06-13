@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Nuit Magique - V4 Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>La Nuit Magique - Mobile Fix</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -11,121 +11,164 @@
 body{
 font-family:Arial,sans-serif;
 min-height:100vh;
+padding:20px;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:30px;
 background:
-linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.75)),
+linear-gradient(rgba(0,0,0,.40),rgba(0,0,0,.75)),
 url("BG CONCOURS NM.png");
 background-size:cover;
 background-position:center;
-background-attachment:fixed;
+background-repeat:no-repeat;
 color:white;
 }
 
 .card{
-width:100%;
-max-width:760px;
-background:rgba(15,15,15,.35);
-backdrop-filter:blur(18px);
+width:min(92vw,760px);
+background:rgba(10,10,10,.45);
+backdrop-filter:blur(14px);
+-webkit-backdrop-filter:blur(14px);
 border:1px solid rgba(255,255,255,.12);
-border-radius:32px;
-padding:40px;
+border-radius:28px;
+padding:32px;
 text-align:center;
-box-shadow:0 0 50px rgba(0,0,0,.45);
 }
 
 .logo-lnm{
 width:100%;
-max-width:500px;
+max-width:420px;
 display:block;
-margin:auto;
-filter:drop-shadow(0 0 25px rgba(255,220,120,.5));
+margin:0 auto 10px;
 }
 
 .logo-cafe{
-width:130px;
-margin:20px auto;
+width:120px;
 display:block;
+margin:10px auto 20px;
 background:white;
 border-radius:50%;
-padding:8px;
+padding:6px;
 }
 
 h1{
-font-size:3rem;
+font-size:2.4rem;
 color:#ffd96a;
-text-shadow:0 0 20px rgba(255,220,120,.4);
 margin-bottom:15px;
 }
 
 .intro{
-line-height:1.8;
-margin-bottom:25px;
+line-height:1.7;
+font-size:1rem;
+margin-bottom:20px;
 }
 
 .lots-count{
-font-size:2rem;
+font-size:1.8rem;
 font-weight:bold;
 color:#ffd96a;
-margin:25px 0;
+margin:20px 0;
 }
 
 .lots{
 display:grid;
 grid-template-columns:repeat(2,1fr);
-gap:15px;
+gap:12px;
 margin-bottom:25px;
 }
 
 .lot{
-padding:18px;
-border-radius:18px;
+padding:16px;
+border-radius:16px;
 background:rgba(255,255,255,.08);
 border:1px solid rgba(255,255,255,.12);
 }
 
-input{
+input[type=email]{
 width:100%;
 padding:16px;
 border:none;
 border-radius:14px;
 margin-bottom:15px;
+font-size:16px;
 }
 
 .check{
 display:flex;
+align-items:flex-start;
 gap:10px;
 text-align:left;
-margin-bottom:12px;
+margin-bottom:14px;
+font-size:14px;
+}
+
+.check input{
+min-width:20px;
+min-height:20px;
+margin-top:2px;
 }
 
 button{
 width:100%;
-background:linear-gradient(45deg,#ffd96a,#d4af37);
-color:black;
+padding:16px;
+border:none;
+border-radius:14px;
 font-size:18px;
 font-weight:bold;
-border:none;
-padding:18px;
-border-radius:15px;
-cursor:pointer;
+background:linear-gradient(45deg,#ffd96a,#d4af37);
 }
 
-.preview{
-margin-top:25px;
-padding:20px;
-border-radius:20px;
+.success{
+margin-top:20px;
+padding:18px;
+border-radius:18px;
 background:rgba(255,215,106,.12);
 border:1px solid rgba(255,215,106,.25);
 }
 
-@media(max-width:700px){
-h1{font-size:2rem}
-.lots{grid-template-columns:1fr}
-.logo-lnm{max-width:280px}
+@media (max-width:768px){
+
+body{
+padding:12px;
+align-items:flex-start;
 }
+
+.card{
+padding:22px;
+border-radius:22px;
+margin-top:10px;
+}
+
+.logo-lnm{
+max-width:240px;
+}
+
+.logo-cafe{
+width:85px;
+}
+
+h1{
+font-size:1.8rem;
+}
+
+.lots-count{
+font-size:1.3rem;
+}
+
+.lots{
+grid-template-columns:1fr;
+}
+
+.intro{
+font-size:.95rem;
+}
+
+button{
+font-size:16px;
+}
+
+}
+
 </style>
 </head>
 <body>
@@ -154,19 +197,16 @@ Tente ta chance de remporter un PASS, une place ou une petite surprise pour La N
 <div class="lot">💛 300 Codes promo -10%</div>
 </div>
 
-<input placeholder="Votre adresse email">
+<input type="email" placeholder="Votre adresse email">
 
 <label class="check"><input type="checkbox"> Recevoir les actualités de La Nuit Magique</label>
 <label class="check"><input type="checkbox"> J'accepte le règlement du concours</label>
 
 <button>Participer</button>
 
-<div class="preview">
-✨ PARTICIPATION ENREGISTRÉE ✨
-<br><br>
+<div class="success">
+✨ PARTICIPATION ENREGISTRÉE ✨<br><br>
 📅 Tirage au sort le 1er août 2026
-<br><br>
-🎩 Peut-être serez-vous l'un des gagnants...
 </div>
 
 </div>
