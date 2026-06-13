@@ -1,14 +1,38 @@
 <!DOCTYPE html>
 <html>
+<head>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
 <body>
 
 <input id="email" placeholder="email">
-<button onclick="participer()">Test</button>
+<button onclick="participer()">Test Supabase</button>
+
+<div id="result"></div>
 
 <script>
-function participer(){
-    alert("Le bouton fonctionne !");
+
+const client = supabase.createClient(
+'https://cfaeujwhttqeasxrudxv.supabase.co',
+'sb_publishable_JlVXcA65QfH-MpPpruDluw_vWtcerW2'
+);
+
+async function participer(){
+
+const email = document.getElementById('email').value;
+
+const { data, error } = await client
+.from('participants')
+.insert([{ email }])
+.select();
+
+document.getElementById('result').innerText =
+JSON.stringify({data,error},null,2);
+
+console.log(data,error);
+
 }
+
 </script>
 
 </body>
