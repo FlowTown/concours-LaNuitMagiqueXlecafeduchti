@@ -3,68 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jeu Concours - La Nuit Magique</title>
+
+<title>Jeu Concours - La Nuit Magique x Le Café du Ch'ti</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 body{
-    font-family: Arial, sans-serif;
-    background:#111;
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#0f0f0f;
     color:white;
-    text-align:center;
-    padding:40px;
+    font-family:Arial,sans-serif;
 }
 
-.container{
+.card{
+    width:90%;
     max-width:500px;
-    margin:auto;
+    background:#1a1a1a;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 0 30px rgba(0,0,0,.5);
+}
+
+h1{
+    color:#d4af37;
 }
 
 input{
     width:100%;
-    padding:12px;
-    margin:15px 0;
+    padding:15px;
+    border-radius:10px;
     border:none;
-    border-radius:8px;
+    margin:15px 0;
+    box-sizing:border-box;
 }
 
 button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
     background:#d4af37;
     color:black;
-    border:none;
-    padding:15px 25px;
-    border-radius:8px;
-    cursor:pointer;
     font-weight:bold;
+    cursor:pointer;
 }
 
-.small{
-    font-size:12px;
-    opacity:.8;
+button:hover{
+    opacity:.9;
+}
+
+label{
+    display:block;
+    margin:15px 0;
+    text-align:left;
+    font-size:14px;
+}
+
+#message{
+    margin-top:20px;
+    font-weight:bold;
 }
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<div class="card">
 
 <h1>🎩 Jeu Concours</h1>
 
 <p>
-Tentez votre chance pour gagner des places pour
-La Nuit Magique.
+Participez au tirage au sort
+La Nuit Magique x Le Café du Ch'ti
 </p>
 
-<input type="email" id="email" placeholder="Votre adresse mail">
+<input
+type="email"
+id="email"
+placeholder="Votre adresse email"
+required>
 
-<button>Participer</button>
+<label>
+<input type="checkbox" id="rgpd">
+J'accepte le règlement du concours et l'utilisation de mon adresse email dans le cadre de celui-ci.
+</label>
 
-<p class="small">
-Participation limitée à une seule participation
-par adresse email.
-</p>
+<button onclick="participer()">
+Participer
+</button>
+
+<div id="message"></div>
 
 </div>
+
+<script>
+
+const supabase = window.supabase.createClient(
+'https://cfaeujwhttqeasxrudxv.supabase.co',
+'sb_publishable_JlVXcA65QfH-MpPpruDluw_vWtcerW2'
+);
+
+async function participer(){
+
+const email = document.getElementById('email').value.trim();
+const rgpd = document.getElementById('rgpd').checked;
+const message = document.getElementById('message');
+
+if(!email){
+    message.innerHTML = "Veuillez renseigner votre email.";
+    return;
+}
+
+if(!rgpd){
+    message.innerHTML = "Veuillez accepter le règlement.";
+    return;
+}
+
+const { error } = await supabase
+.from('participants')
+.insert([{ email }]);
+
+if(error){
+
+    if(error.message.includes('duplicate')){
+        message.innerHTML =
+        "Cette adresse email a déjà participé.";
+    }else{
+        message.innerHTML =
+        "Erreur : " + error.message;
+    }
+
+}else{
+
+    message.innerHTML =
+    "✅ Participation enregistrée. Bonne chance !";
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
